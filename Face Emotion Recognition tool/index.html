@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FaceDetect - Emotion Recognition AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="scene">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-content">
+                <div class="logo" onclick="handleLogoClick()" style="cursor: pointer;">
+                    <span class="logo-icon">🔍</span>
+                    <h1>FaceDetect</h1>
+                </div>
+                <p class="nav-info">Real-time Emotion Detection</p>
+            </div>
+        </nav>
+
+        <!-- Main Container -->
+        <div class="container">
+            <!-- Home Screen -->
+            <div id="homeScreen" class="screen active">
+                <div class="mode-content">
+                    <h2>Choose Your Detection Mode</h2>
+                    <p class="subtitle">Detect emotions from images or live video feed</p>
+                    
+                    <div class="mode-grid">
+                        <!-- Image Card -->
+                        <div class="mode-card" onclick="openImageMode()">
+                            <div class="mode-icon">📸</div>
+                            <h3>Image Upload</h3>
+                            <p>Upload a photo and analyze emotions</p>
+                            <button class="mode-btn">Select Image</button>
+                        </div>
+                        
+                        <!-- Video Card -->
+                        <div class="mode-card" onclick="openVideoMode()">
+                            <div class="mode-icon">🎥</div>
+                            <h3>Live Camera</h3>
+                            <p>Real-time emotion detection from webcam</p>
+                            <button class="mode-btn">Open Camera</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image Screen -->
+            <div id="imageScreen" class="screen">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="goHome()">← Back Home</button>
+                    <h2>Image Analysis</h2>
+                </div>
+
+                <div class="image-container">
+                    <div class="upload-area" id="uploadArea" onclick="document.getElementById('imageInput').click()">
+                        <div class="upload-content">
+                            <span class="upload-icon">📤</span>
+                            <h3>Click to upload</h3>
+                            <p>or drag and drop your image</p>
+                            <input type="file" id="imageInput" accept="image/*" hidden onchange="processImage(this.files[0])">
+                        </div>
+                    </div>
+
+                    <div id="imageOutput" style="display: none;">
+                        <canvas id="detectionCanvas" style="width: 100%; border-radius: 12px; margin: 15px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1);"></canvas>
+                        <div id="imageResults" class="results"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Screen -->
+            <div id="videoScreen" class="screen">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="goHome()">← Back Home</button>
+                    <h2>Live Detection</h2>
+                </div>
+
+                <div class="video-wrapper">
+                    <div class="video-container">
+                        <video id="video" autoplay muted playsinline></video>
+                        <canvas id="videoCanvas"></canvas>
+                    </div>
+
+                    <div class="video-controls">
+                        <button class="control-btn start-btn" onclick="startCamera()">▶ Start Camera</button>
+                        <button class="control-btn stop-btn" id="stopBtn" onclick="stopCamera()" disabled>⏹ Stop</button>
+                    </div>
+
+                    <div id="videoResults" class="results"></div>
+                </div>
+            </div>
+
+            <!-- Status -->
+            <div id="status" class="status"></div>
+        </div>
+
+        <!-- Loading -->
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>Loading AI models...</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
